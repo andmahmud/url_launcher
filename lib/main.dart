@@ -11,20 +11,20 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Launcher Example',
+      debugShowCheckedModeBanner: false,
+      title: 'URL Launcher ',
       theme: ThemeData(
         primarySwatch: Colors.blue,
         scaffoldBackgroundColor: Colors.grey[100],
       ),
-      home: const MyHomePage(),
+      home: const HomePage(),
     );
   }
 }
 
-class MyHomePage extends StatelessWidget {
-  const MyHomePage({super.key});
+class HomePage extends StatelessWidget {
+  const HomePage({super.key});
 
-  // Function to make a phone call
   Future<void> _makePhoneCall(String phoneNumber) async {
     final Uri callUri = Uri(scheme: 'tel', path: phoneNumber);
     if (!await launchUrl(callUri)) {
@@ -32,7 +32,6 @@ class MyHomePage extends StatelessWidget {
     }
   }
 
-  // Function to send a message
   Future<void> _sendMessage(String phoneNumber) async {
     final Uri messageUri = Uri(scheme: 'sms', path: phoneNumber);
     if (!await launchUrl(messageUri)) {
@@ -40,7 +39,6 @@ class MyHomePage extends StatelessWidget {
     }
   }
 
-  // Function to launch a URL
   Future<void> _launchUrl(String url) async {
     final Uri uri = Uri.parse(url);
     if (!await launchUrl(uri)) {
@@ -48,13 +46,11 @@ class MyHomePage extends StatelessWidget {
     }
   }
 
-  // Function to send an email
   Future<void> _sendEmail(String email) async {
     final Uri emailUri = Uri(
       scheme: 'mailto',
       path: email,
-      query:
-          'subject=Hello&body=This is a test email', // Pre-fill subject and body
+      query: 'subject=Hello&body=This is a test email',
     );
     if (!await launchUrl(emailUri)) {
       throw Exception('Could not send an email to $email');
@@ -65,17 +61,15 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Launcher Example'),
-        centerTitle: true,
-        flexibleSpace: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              colors: [Colors.blue, Colors.purple],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
+        title: Center(
+            child: const Text(
+          'URL Launcher ',
+          style: TextStyle(
+            color: Colors.white,
           ),
-        ),
+        )),
+        backgroundColor: Colors.teal,
+        centerTitle: true,
       ),
       body: Center(
         child: Padding(
@@ -84,7 +78,7 @@ class MyHomePage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               _buildActionButton(
-                label: 'Make Phone Call',
+                label: 'Call Now',
                 color: Colors.green,
                 icon: Icons.phone,
                 onPressed: () => _makePhoneCall('1234567890'),
@@ -98,17 +92,17 @@ class MyHomePage extends StatelessWidget {
               ),
               const SizedBox(height: 16),
               _buildActionButton(
-                label: 'Open URL',
+                label: 'Visit Protfolio',
                 color: Colors.orange,
                 icon: Icons.link,
-                onPressed: () => _launchUrl('https://www.andsayemxz.com'),
+                onPressed: () => _launchUrl('https://www.andsayem.com'),
               ),
               const SizedBox(height: 16),
               _buildActionButton(
                 label: 'Send Email',
                 color: Colors.red,
                 icon: Icons.email,
-                onPressed: () => _sendEmail('test@example.com'),
+                onPressed: () => _sendEmail('andmahmud2255@gmail.com'),
               ),
             ],
           ),
@@ -126,7 +120,7 @@ class MyHomePage extends StatelessWidget {
     return ElevatedButton.icon(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
-        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 30),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
         ),
