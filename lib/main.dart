@@ -12,7 +12,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Launcher Example',
-      theme: ThemeData(primarySwatch: Colors.blue),
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        scaffoldBackgroundColor: Colors.grey[100],
+      ),
       home: const MyHomePage(),
     );
   }
@@ -61,37 +64,79 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Launcher Example')),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ElevatedButton(
-              onPressed: () => _makePhoneCall('1234567890'),
-              style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
-              child: const Text('Make Phone Call'),
+      appBar: AppBar(
+        title: const Text('Launcher Example'),
+        centerTitle: true,
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Colors.blue, Colors.purple],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
             ),
-            const SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: () => _sendMessage('1234567890'),
-              style: ElevatedButton.styleFrom(backgroundColor: Colors.blue),
-              child: const Text('Send Message'),
-            ),
-            const SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: () => _launchUrl('https://www.andsayemxz.com'),
-              style: ElevatedButton.styleFrom(backgroundColor: Colors.orange),
-              child: const Text('Open URL'),
-            ),
-            const SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: () => _sendEmail('test@example.com'),
-              style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
-              child: const Text('Send Email'),
-            ),
-          ],
+          ),
         ),
+      ),
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              _buildActionButton(
+                label: 'Make Phone Call',
+                color: Colors.green,
+                icon: Icons.phone,
+                onPressed: () => _makePhoneCall('1234567890'),
+              ),
+              const SizedBox(height: 16),
+              _buildActionButton(
+                label: 'Send Message',
+                color: Colors.blue,
+                icon: Icons.message,
+                onPressed: () => _sendMessage('1234567890'),
+              ),
+              const SizedBox(height: 16),
+              _buildActionButton(
+                label: 'Open URL',
+                color: Colors.orange,
+                icon: Icons.link,
+                onPressed: () => _launchUrl('https://www.andsayemxz.com'),
+              ),
+              const SizedBox(height: 16),
+              _buildActionButton(
+                label: 'Send Email',
+                color: Colors.red,
+                icon: Icons.email,
+                onPressed: () => _sendEmail('test@example.com'),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildActionButton({
+    required String label,
+    required Color color,
+    required IconData icon,
+    required VoidCallback onPressed,
+  }) {
+    return ElevatedButton.icon(
+      onPressed: onPressed,
+      style: ElevatedButton.styleFrom(
+        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
+        backgroundColor: color,
+        elevation: 5,
+      ),
+      icon: Icon(icon, color: Colors.white),
+      label: Text(
+        label,
+        style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
       ),
     );
   }
